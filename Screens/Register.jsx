@@ -51,7 +51,7 @@ const Register = () => {
         if(isSuccess){
             dispatch(setUser(registerData))
             // Alert.alert("Registered successfully")
-            navigation.navigate("Home")
+            navigation.navigate("BottomTabs", { screen: "Home" })
         }
 
     }, [isSuccess])
@@ -59,7 +59,7 @@ const Register = () => {
 
     useEffect(()=> {
 
-        user ? navigation.navigate("Home") : null
+        user ? navigation.navigate("BottomTabs", { screen: "Home" }) : null
 
     }, [isFocused])
 

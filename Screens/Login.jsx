@@ -46,7 +46,7 @@ const Login = () => {
 
         if(isSuccess){
             dispatch(setUser(loginData))
-            navigation.navigate("Home")
+            navigation.navigate("BottomTabs", { screen: "Home" })
         }
 
     }, [isSuccess])

@@ -2,8 +2,9 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { logoutUser } from '../redux/authSlice'
+import { logoutUser, setUser } from '../redux/authSlice'
 import { useIsFocused } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = () => {
 
@@ -19,9 +20,28 @@ const Home = () => {
     if(!user){
       navigation.navigate("Login")
     }
-    
 
-  }, [user])
+    const fetchUser = async() => {
+      try {
+        
+        const userData = await AsyncStorage.getItem('goalUser')
+        console.log("USER DATA: ", userData)
+        if(userData){
+          dispatch(setUser(JSON.parse(userData)))
+          
+        }else if(!userData){
+          navigation.navigate("Login")
+        }
+
+      } catch (error) {
+        console.log("ERROR FETCHING USER DATA: ", error)
+      }
+    }
+    
+    fetchUser()
+
+  }, [isFocused])
+
 
   const logoutHandler = () => {
     console.log("logging out")

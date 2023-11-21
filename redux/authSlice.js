@@ -5,6 +5,7 @@ const user = AsyncStorage.getItem('goalUser').then((res)=> console.log("ASYNC US
 
 const initialState = {
     user: user ? user : null
+    // user: null
 }
 
 const authSlice = createSlice({
@@ -13,7 +14,9 @@ const authSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload
-            AsyncStorage.setItem('goalUser', JSON.stringify(action.payload))
+            AsyncStorage.setItem('goalUser', JSON.stringify(action.payload)).catch((error) => {
+                console.log("error saving user data: ", error)
+            })
         },
         logoutUser: (state, action) => {
             state.user = null
